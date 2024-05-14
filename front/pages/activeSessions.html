@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Перегляд скорочених URL</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="viewShortenedBox">
+      <h1 class="header">Перегляд скорочених URL</h1>
+      <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th>Оригінальний URL</th>
+            <th>Скорочений URL</th>
+            <th>Дата закінчення</th>
+          </tr>
+        </thead>
+        <tbody id="urlTableBody">
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script> 
+
+   const userId = localStorage.getItem('userId');
+   async function fetchUrls() {
+  try {
+    const response = await axios.get('/api/basket', {
+      params: {
+        userId: userId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Помилка при отриманні URL-адрес:", error);
+  }
+}
+
+
+    function formatDate(date) {
+      return date ? new Date(date).toISOString().slice(0, 19).replace("T", " ") : "N/A";
+    }
+
+    async function displayUrls() {
+      const urls = await fetchUrls();
+      const tableBody = document.getElementById("urlTableBody");
+      tableBody.innerHTML = urls.map(url => `
+        <tr>
+          <td style="white-space: normal; word-break: break-all;">${url.origUrl}</td>
+          <td style="white-space: normal; word-break: break-all;">
+            <a href="${url.shortUrl}" target="_blank" rel="noopener noreferrer">${url.shortUrl}</a>
+          </td>
+          <td style="white-space: normal; word-break: break-all;">${formatDate(url.expiryDate)}</td>
+        </tr>
+      `).join("");
+    }
+
+    displayUrls();
+  </script>
+</body>
+</html>
