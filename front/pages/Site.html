@@ -4,35 +4,76 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>URL Shortener</title>
-  <link rel="stylesheet" href="styles.css"> 
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
     <div class="shortenerBox">
       <h1 class="header">URL Shortener</h1>
       <div>
-        <a href="/Auth.html" class="authButton">Authorization</a>
+        <a href="/login.html" class="authButton btn">
+          <div id="container-stars">
+            <div id="stars"></div>
+          </div>
+          <div id="glow">
+            <div class="circle"></div>
+            <div class="circle"></div>
+          </div>
+          <strong>Login</strong>
+        </a>
+        <a href="/registration.html" class="authButton btn">
+          <div id="container-stars">
+            <div id="stars"></div>
+          </div>
+          <div id="glow">
+            <div class="circle"></div>
+            <div class="circle"></div>
+          </div>
+          <strong>Registration</strong>
+        </a>
       </div>
       <form id="urlShortenerForm">
         <div class="inputGroup">
           <input type="text" id="urlInput" class="inputField" placeholder="Enter URL">
           <input type="text" id="customUrlInput" class="inputField" placeholder="Enter custom short URL (optional)">
-          <button type="button" id="generateButton" class="generateButton">
-            Generate Random URL
+          <button type="button" id="generateButton" class="generateButton btn">
+            <div id="container-stars">
+              <div id="stars"></div>
+            </div>
+            <div id="glow">
+              <div class="circle"></div>
+              <div class="circle"></div>
+            </div>
+            <strong>Generate Random URL</strong>
           </button>
           <input type="datetime-local" id="expiryDateInput" class="inputField" placeholder="Enter expiry date (optional)">
         </div>
-        <button type="submit" id="submitButton" class="submitButton">
-          Shorten URL
+        <button type="submit" id="submitButton" class="submitButton btn">
+          <div id="container-stars">
+            <div id="stars"></div>
+          </div>
+          <div id="glow">
+            <div class="circle"></div>
+            <div class="circle"></div>
+          </div>
+          <strong>Shorten URL</strong>
         </button>
       </form>
       <div id="shortUrlContainer"></div>
-      <button id="copyButton" style="display: none;">Copy</button> 
+      <button id="copyButton" class="btn" style="display: none;">
+        <div id="container-stars">
+          <div id="stars"></div>
+        </div>
+        <div id="glow">
+          <div class="circle"></div>
+          <div class="circle"></div>
+        </div>
+        <strong>Copy</strong>
+      </button> 
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('urlShortenerForm');
       const urlInput = document.getElementById('urlInput');

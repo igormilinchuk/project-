@@ -10,6 +10,7 @@
   <div class="container">
     <div class="viewShortenedBox">
       <h1 class="header">Перегляд скорочених URL</h1>
+      <button id="logoutButton" class="btn"><strong>Logout</strong></button>
       <table class="table">
         <thead class="table-dark">
           <tr>
@@ -25,24 +26,22 @@
     </div>
   </div>
 
-
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script> 
+  <script>
+    const userId = localStorage.getItem('userId');
 
-   const userId = localStorage.getItem('userId');
-   async function fetchUrls() {
-  try {
-    const response = await axios.get('/api/basket', {
-      params: {
-        userId: userId
+    async function fetchUrls() {
+      try {
+        const response = await axios.get('/api/basket', {
+          params: {
+            userId: userId
+          }
+        });
+        return response.data;
+      } catch (error) {
+        console.error("Помилка при отриманні URL-адрес:", error);
       }
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Помилка при отриманні URL-адрес:", error);
-  }
-}
-
+    }
 
     function formatDate(date) {
       return date ? new Date(date).toISOString().slice(0, 19).replace("T", " ") : "N/A";
@@ -61,6 +60,11 @@
         </tr>
       `).join("");
     }
+
+    document.getElementById('logoutButton').addEventListener('click', function () {
+      localStorage.clear();
+      window.location.href = '/Auth.html';
+    });
 
     displayUrls();
   </script>

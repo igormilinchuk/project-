@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   const token = localStorage.getItem('token');
   if (!token) {
-    window.location.href = '/Auth.html';
+    window.location.href = '/login.html';
   }
 
   try {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   } catch (error) {
     console.error('Authentication failed:', error.message);
-    window.location.href = '/Auth.html'; 
+    window.location.href = '/login.html'; 
   }
 
   const logoutButton = document.getElementById('logoutButton');
