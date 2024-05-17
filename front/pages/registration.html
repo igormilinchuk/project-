@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration/Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <h2>User Registration</h2>
@@ -22,24 +23,24 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             try {
-                const response = await fetch('/api/user/registration', {
-                    method: 'POST',
+                const response = await axios.post('/api/user/registration', {
+                    email,
+                    password
+                }, {
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
+                    }
                 });
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.message);
-                }
+
+                const data = response.data;
+
                 // Зберігаємо токен в localStorage
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('userId', data.userId); // Зберігаємо userId
                 window.location.href = '/authorizedSite.html';
             } catch (error) {
-                console.error('Registration failed:', error.message);
-                alert('Registration failed: ' + error.message);
+                console.error('Registration failed:', error.response ? error.response.data.message : error.message);
+                alert('Registration failed: ' + (error.response ? error.response.data.message : error.message));
             }
         });
     </script>

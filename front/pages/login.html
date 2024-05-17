@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <h2>User Login</h2>
@@ -22,25 +23,23 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             try {
-                const response = await fetch('/api/user/login', {
-                    method: 'POST',
+                const response = await axios.post('/api/user/login', {
+                    email,
+                    password
+                }, {
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
+                    }
                 });
 
-                const data = await response.json();
-                
-                if (!response.ok) {
-                    throw new Error(data.message);
-                }
+                const data = response.data;
+
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('userId', data.userId); 
                 window.location.href = '/authorizedSite.html';
             } catch (error) {
-                console.error('Login failed:', error.message);
-                alert('Login failed: ' + error.message);
+                console.error('Login failed:', error.response ? error.response.data.message : error.message);
+                alert('Login failed: ' + (error.response ? error.response.data.message : error.message));
             }
         });
     </script>

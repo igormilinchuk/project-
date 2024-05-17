@@ -117,7 +117,7 @@
         }
 
         try {
-          const response = await axios.post(`http://localhost:5000/api/short`, {
+          const response = await axios.post(`/api/short`, {
             origUrl: url,
             customShortUrl: customShortUrl || null,
             expiryDate: expiryDate || null,

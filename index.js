@@ -4,6 +4,7 @@ const cors = require("cors");
 const sequelize = require('./db');
 const models = require('./backend/models/models');
 const router = require('./backend/routes/mainRouter');
+const pageRoutes = require('./front/pageRoutes');
 const errorHandler = require('./backend/middleware/errorMiddleware');
 const authMiddleware = require('./backend/middleware/authorizationMiddleware')
 const { Op } = require('sequelize');
@@ -31,6 +32,10 @@ app.use(errorHandler);
 
 app.use(express.json());
 
+app.get('/styles.css', (req, res) => {
+  res.sendFile(path.join(__dirname, './front/pages', 'styles.css'));
+})
+
 router.get("/", async (req, res, next) => {
   try {
     const userId = req.session.userId;
@@ -44,18 +49,8 @@ router.get("/", async (req, res, next) => {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './front/pages', 'Site.html'));
 });
-app.get('/registration.html', (req, res) => {
-  res.sendFile(path.join(__dirname, './front/pages', 'registration.html'));
-});
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, './front/pages', 'login.html'));
-});
-app.get('/authorizedSite.html', (req, res) => {
-  res.sendFile(path.join(__dirname, './front/pages', 'authorizedSite.html'));
-});
-app.get('/activeSessions.html', (req, res) => {
-  res.sendFile(path.join(__dirname, './front/pages', 'activeSessions.html'));
-});
+
+app.use('/', pageRoutes);
 
 
 
