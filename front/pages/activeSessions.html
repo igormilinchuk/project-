@@ -10,7 +10,16 @@
   <div class="container">
     <div class="viewShortenedBox">
       <h1 class="header">Перегляд скорочених URL</h1>
-      <button id="logoutButton" class="btn"><strong>Logout</strong></button>
+      <a href="/" class="authButton btn" id="logoutButton">
+        <div id="container-stars">
+            <div id="stars"></div>
+        </div>
+        <div id="glow">
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <strong>Log out</strong>
+    </a>
       <table class="table">
         <thead class="table-dark">
           <tr>
@@ -52,8 +61,10 @@
       const tableBody = document.getElementById("urlTableBody");
       tableBody.innerHTML = urls.map(url => `
         <tr>
-          <td style="white-space: normal; word-break: break-all;">${url.origUrl}</td>
-          <td style="white-space: normal; word-break: break-all;">
+          <td class="orig-url">
+            <a href="${url.origUrl}" target="_blank" rel="noopener noreferrer">${url.origUrl}</a>
+          </td>
+          <td class="short-url">
             <a href="${url.shortUrl}" target="_blank" rel="noopener noreferrer">${url.shortUrl}</a>
           </td>
           <td style="white-space: normal; word-break: break-all;">${formatDate(url.expiryDate)}</td>

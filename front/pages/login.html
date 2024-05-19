@@ -4,21 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <h2>User Login</h2>
-    <form id="loginForm">
-        <label for="loginEmail">Email:</label>
-        <input type="email" id="loginEmail" name="loginEmail" required>
-        <label for="loginPassword">Password:</label>
-        <input type="password" id="loginPassword" name="loginPassword" required>
-        <button type="submit">Login</button>
-    </form>
-    <button onclick="location.href='/registration.html'">Go to Registration</button>
-    <button onclick="location.href='/'">Back to site</button>
+    <div class="login-container">
+        <h2 class="header">User Login</h2>
+        <form id="loginForm" class="form">
+            <div class="form-group">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" name="loginEmail" required class="login-input">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" name="loginPassword" required class="login-input">
+            </div>
+            <button type="submit" class="authButton btn"> <!-- Змінено клас кнопки -->
+                <div id="container-stars">
+                    <div id="stars"></div>
+                </div>
+                <div id="glow">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+                <strong>Login</strong>
+            </button>
+        </form>
+        <div class="buttons-grid">
+            <a href="/registration.html" class="authButton btn">
+                <div id="container-stars">
+                    <div id="stars"></div>
+                </div>
+                <div id="glow">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+                <strong>Registration</strong>
+            </a>
+            <a href="/" class="authButton btn">
+                <div id="container-stars">
+                    <div id="stars"></div>
+                </div>
+                <div id="glow">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+                <strong>Back to site</strong>
+            </a>
+        </div>
+    </div>
+    
+
+    <div id="notification" class="login-notification" style="display: none;"></div>
 
     <script>
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.backgroundColor = isError ? 'rgba(255, 0, 0, 0.8)' : 'rgba(0, 255, 0, 0.8)';
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value;
@@ -40,7 +89,7 @@
                 window.location.href = '/authorizedSite.html';
             } catch (error) {
                 console.error('Login failed:', error.response ? error.response.data.message : error.message);
-                alert('Login failed: ' + (error.response ? error.response.data.message : error.message));
+                showNotification('Login failed: ' + (error.response ? error.response.data.message : error.message), true);
             }
         });
     </script>

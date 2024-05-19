@@ -1,22 +1,410 @@
-.body {
+body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background: black;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.orig-url a {
+  color: rgb(255, 0, 208);
+  text-decoration: none;
+}
+.orig-url a:hover {
+  text-decoration: underline;
+}
+
+.short-url a {
+  color: rgb(6, 209, 255);
+  text-decoration: none;
+}
+.short-url a:hover {
+  text-decoration: underline;
+}
+
+/* Стилі для форми авторизації */
+.login-container {
+  width: 100%; /* Змінено ширину контейнера на 100% */
+  max-width: 400px; /* Максимальна ширина контейнера */
+  height: auto; /* Автоматична висота контейнера */
+  background: linear-gradient(#212121, #212121) padding-box,
+              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-size: 200% 100%;
+  animation: gradient 5s ease infinite;
+  margin: 200px auto 0; /* Висота зверху, а ширина автоматична */
+}
+
+/* Стилі для полів вводу */
+.login-input {
+  width: 100%;
+  max-width: 320px; /* Максимальна ширина поля вводу */
+  padding: 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+  font-size: 16px;
+}
+
+
+.login-button {
+  display: flex;
+  justify-content: center; /* Вирівнює кнопки по центру */
+  gap: 10px;
+}
+
+.login-notification {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 999;
+}
+
+/* Оновлені стилі для реєстрації */
+.registration-container {
+  width: 100%;
+  max-width: 400px; /* Максимальна ширина контейнера */
+  height: auto; /* Автоматична висота контейнера */
+  background: linear-gradient(#212121, #212121) padding-box,
+              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-size: 200% 100%;
+  animation: gradient 5s ease infinite;
+  margin: 200px auto 0; /* Висота зверху, а ширина автоматична */
+}
+
+.registration-input {
+  width: 100%;
+  max-width: 320px; /* Максимальна ширина поля вводу */
+  padding: 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+  font-size: 16px;
+}
+
+.registration-button {
+  display: flex;
+  justify-content: center; /* Вирівнює кнопки по центру */
+  gap: 10px;
+}
+
+.registration-notification {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 999;
+}
+
+.registrationButtonsGrid {
+  display: flex;
+  justify-content: center; /* Вирівнює кнопки по центру */
+  gap: 10px;
+}
+
+
+
+.buttons-grid {
+  display: flex;
+  justify-content: center; /* Вирівнює кнопки по центру */
+  gap: 10px;
+}
+
+/* Змінено стилі для кнопок */
+.authButton.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 13rem;
+  overflow: hidden;
+  height: 3rem;
+  background-size: 300% 300%;
+  backdrop-filter: blur(1rem);
+  border-radius: 5rem;
+  transition: 0.5s;
+  border: double 4px transparent;
+  background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #ffdb3b 10%, #FE53BB 45%, #8F51EA 67%, #0044ff 87%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  margin: 10px auto; /* Додано автоматичні відступи по боках */
+}
+
+.authButton.btn:hover {
+  transform: scale(1.1);
+}
+
+.authButton.btn:active {
+  border: double 4px #FE53BB;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  animation: none;
+}
+
+
+.shortenerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.authButtonsContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+  font-size: 16px;
+}
+
+.inputField:not(:placeholder-shown){
+  color: whitesmoke;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+#urlInput {
+  color: #fff;
+}
+
+#customUrlInput {
+  color: #fff;
+}
+
+#shortUrlContainer {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+#shortUrlContainer.visible {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 9999;
+}
+
+#shortUrlContainer a {
+  color: #FE53BB;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.copyButton {
+  display: none;
+}
+
+.copyButton.visible {
+  display: block;
 }
 
 .container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
+  width: 620px;
+  height: 720px;
+  background: linear-gradient(#212121, #212121) padding-box,
+              linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-size: 200% 100%;
+  animation: gradient 5s ease infinite;
+  margin: 100px auto;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 400px; /* Менше розмір контейнера для авторизації */
+}
+
+.auth-box .form-submit-btn {
+  width: auto; /* Автоматична ширина для кнопки логіну */
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container button:active {
+  scale: 0.95;
+}
+
+.container .form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.container .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.container .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #717171;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.container .form-group input {
+  width: 100%;
+  padding: 12px 16px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-family: inherit;
+  background-color: transparent;
+  border: 1px solid #414141;
+}
+
+.container .form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  resize: none;
+  color: #fff;
+  height: 96px;
+  border: 1px solid #414141;
+  background-color: transparent;
+  font-family: inherit;
+}
+
+.container .form-group input::placeholder {
+  opacity: 0.5;
+}
+
+.container .form-group input:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.container .form-group textarea:focus {
+  outline: none;
+  border-color: #e81cff;
+}
+
+.container .form-submit-btn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-self: flex-start;
+  font-family: inherit;
+  color: #717171;
+  font-weight: 600;
+  width: 40%;
+  background: #313131;
+  border: 1px solid #414141;
+  padding: 12px 16px;
+  font-size: inherit;
+  gap: 8px;
+  margin-top: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.container .form-submit-btn:hover {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 10px;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 20px
 }
 
 .table {
@@ -51,7 +439,6 @@
   backdrop-filter: blur(1rem);
   border-radius: 5rem;
   transition: 0.5s;
-  animation: gradient_301 5s ease infinite;
   border: double 4px transparent;
   background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #ffdb3b 10%, #FE53BB 45%, #8F51EA 67%, #0044ff 87%);
   background-origin: border-box;
@@ -107,7 +494,7 @@ strong {
 }
 
 .btn:hover {
-  transform: scale(1.1)
+  transform: scale(1.1);
 }
 
 .btn:active {
