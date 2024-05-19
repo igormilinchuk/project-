@@ -31,13 +31,13 @@
           </div>
           <strong>Registration</strong>
         </a>
-      </div>      
+      </div>
       <form id="urlShortenerForm" class="form-container">
         <div class="inputGroup">
           <input type="text" id="urlInput" class="inputField" placeholder="Enter URL">
           <input type="text" id="customUrlInput" class="inputField" placeholder="Enter custom short URL (optional)">
           <input type="datetime-local" id="expiryDateInput" class="inputField" placeholder="Enter expiry date (optional)">
-        </div>        
+        </div>
         <button type="submit" id="submitButton" class="submitButton btn">
           <div id="container-stars">
             <div id="stars"></div>
@@ -58,111 +58,112 @@
           </div>
           <strong>Copy URL</strong>
         </button>
-      </form>      
+      </form>
       <div id="shortUrlContainer" class="visible">
         <div>
           <h2>Your shortened URL:</h2>
           <a href="#" id="shortenedUrl" target="_blank" rel="noopener noreferrer"></a>
         </div>
-      </div>      
+      </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
- document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('urlShortenerForm');
-  const urlInput = document.getElementById('urlInput');
-  const customUrlInput = document.getElementById('customUrlInput');
-  const expiryDateInput = document.getElementById('expiryDateInput');
-  const shortUrlContainer = document.getElementById('shortUrlContainer');
-  const copyButton = document.getElementById('copyButton');
-  let notification = document.createElement('div');
-  let urlShortened = false;
+  document.addEventListener('DOMContentLoaded', function () {
+    const MAX_URL_LENGTH = 255;
+    const form = document.getElementById('urlShortenerForm');
+    const urlInput = document.getElementById('urlInput');
+    const customUrlInput = document.getElementById('customUrlInput');
+    const expiryDateInput = document.getElementById('expiryDateInput');
+    const shortUrlContainer = document.getElementById('shortUrlContainer');
+    const copyButton = document.getElementById('copyButton');
+    let urlShortened = false;
 
-  // Функція для скорочення URL
-  async function shortenUrl(url, customShortUrl, expiryDate) {
-    try {
-   const response = await axios.post(`/api/short`, {
-    origUrl: url,
-    customShortUrl: customShortUrl || null,
-    expiryDate: expiryDate || null,
-   });
-
-   const data = response.data;
-   shortUrlContainer.innerHTML = `
-    <div>
-      <h2>Your shortened URL:</h2>
-      <a href="${data.shortUrl}" id="shortenedUrlLink" target="_blank" rel="noopener noreferrer">${data.shortUrl}</a>
-    </div>
-   `;
-
-   shortUrlContainer.classList.add('visible');
-   urlInput.value = '';
-   customUrlInput.value = '';
-   expiryDateInput.value = '';
-   urlShortened = true;
-   copyButton.disabled = false;
-   } catch (error) {
-   console.error(error.message);
-   }
- }
-
-  // Обробник події відправлення форми
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const url = urlInput.value.trim();
-    const customShortUrl = customUrlInput.value.trim();
-    const expiryDate = expiryDateInput.value;
-
-    if (!url) {
-    notification.textContent = 'Please enter a URL.';
-    notification.classList.add('notification');
-    document.body.appendChild(notification);
-    setTimeout(function() {
-      document.body.removeChild(notification);
-    }, 2000);
-      return;
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.classList.add('notification');
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 2000);
     }
 
-    const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
-    if (expiryDate && !expiryDate.match(dateRegex)) {
-      alert('Please enter a valid expiry date in the format YYYY-MM-DDTHH:MM.');
-      return;
+    async function shortenUrl(url, customShortUrl, expiryDate) {
+      try {
+        const response = await axios.post(`/api/short`, {
+          origUrl: url,
+          customShortUrl: customShortUrl || null,
+          expiryDate: expiryDate || null,
+        });
+
+        const data = response.data;
+        shortUrlContainer.innerHTML = `
+          <div>
+            <h2>Your shortened URL:</h2>
+            <a href="${data.shortUrl}" id="shortenedUrlLink" target="_blank" rel="noopener noreferrer">${data.shortUrl}</a>
+          </div>
+        `;
+
+        shortUrlContainer.classList.add('visible');
+        urlInput.value = '';
+        customUrlInput.value = '';
+        expiryDateInput.value = '';
+        urlShortened = true;
+        copyButton.disabled = false;
+      } catch (error) {
+        console.error(error.message);
+      }
     }
 
-    const currentDateTime = new Date();
-    const selectedDateTime = new Date(expiryDate);
-    if (expiryDate && selectedDateTime <= currentDateTime) {
-      notification.textContent = 'Please enter a future expiry date.';
-    notification.classList.add('notification');
-    document.body.appendChild(notification);
-    setTimeout(function() {
-      document.body.removeChild(notification);
-    }, 2000);
-      return;
-    }
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const url = urlInput.value.trim();
+      const customShortUrl = customUrlInput.value.trim();
+      const expiryDate = expiryDateInput.value;
 
-    await shortenUrl(url, customShortUrl, expiryDate);
+      if (!url) {
+        showNotification('Please enter a URL.');
+        return;
+      }
+
+      if (url.length > MAX_URL_LENGTH) {
+        showNotification(`URL must be less than ${MAX_URL_LENGTH} characters.`);
+        return;
+      }
+
+      if (customShortUrl.length > MAX_URL_LENGTH) {
+        showNotification(`Custom short URL must be less than ${MAX_URL_LENGTH} characters.`);
+        return;
+      }
+
+      const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+      if (expiryDate && !expiryDate.match(dateRegex)) {
+        showNotification('Please enter a valid expiry date in the format YYYY-MM-DDTHH:MM.');
+        return;
+      }
+
+      const currentDateTime = new Date();
+      const selectedDateTime = new Date(expiryDate);
+      if (expiryDate && selectedDateTime <= currentDateTime) {
+        showNotification('Please enter a future expiry date.');
+        return;
+      }
+
+      await shortenUrl(url, customShortUrl, expiryDate);
+    });
+
+    copyButton.addEventListener('click', function () {
+      const shortenedUrlLink = document.getElementById('shortenedUrlLink');
+      const tempInput = document.createElement('input');
+      tempInput.value = shortenedUrlLink.href;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showNotification('URL copied to clipboard!');
+    });
   });
-
-  // Copy URL Button Functionality
-  copyButton.addEventListener('click', function () {
-    const shortenedUrlLink = document.getElementById('shortenedUrlLink');
-    const tempInput = document.createElement('input');
-    tempInput.value = shortenedUrlLink.href;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-    // Automatically show notification
-    notification.textContent = 'URL copied to clipboard!';
-    notification.classList.add('notification');
-    document.body.appendChild(notification);
-    setTimeout(function() {
-      document.body.removeChild(notification);
-    }, 2000); 
-  });
-});
   </script>
 </body>
 </html>

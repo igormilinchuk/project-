@@ -10,16 +10,16 @@
   <div class="container">
     <div class="viewShortenedBox">
       <h1 class="header">Перегляд скорочених URL</h1>
-      <a href="/" class="authButton btn" id="logoutButton">
-        <div id="container-stars">
-            <div id="stars"></div>
-        </div>
-        <div id="glow">
-            <div class="circle"></div>
-            <div class="circle"></div>
-        </div>
-        <strong>Log out</strong>
-    </a>
+    <a href="/authorizedSite.html" class="authButton btn">
+      <div id="container-stars">
+          <div id="stars"></div>
+      </div>
+      <div id="glow">
+          <div class="circle"></div>
+          <div class="circle"></div>
+      </div>
+      <strong>Back to site</strong>
+  </a>
       <table class="table">
         <thead class="table-dark">
           <tr>
@@ -71,11 +71,6 @@
         </tr>
       `).join("");
     }
-
-    document.getElementById('logoutButton').addEventListener('click', function () {
-      localStorage.clear();
-      window.location.href = '/Auth.html';
-    });
 
     displayUrls();
   </script>

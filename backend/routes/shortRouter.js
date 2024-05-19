@@ -5,12 +5,13 @@ const validUrl = require('valid-url');
 const { Url } = require('../models/models');
 const ApiError = require('../error/apiError');
 
-router.post("/", async (req, res, next) => {
-  const { origUrl, customShortUrl, expiryDate, } = req.body;
-  let { userId } = req.body; // Отримати userId з клієнтського запиту
+const MAX_URL_LENGTH = 255;
 
-  // Якщо користувач неавторизований, задати userId значення за замовчуванням
-  userId = userId || null; // Або яке-небудь значення за замовчуванням, наприклад, null
+router.post("/", async (req, res, next) => {
+  const { origUrl, customShortUrl, expiryDate } = req.body;
+  let { userId } = req.body;
+
+  userId = userId || null;
 
   const defaultExpiryDate = new Date();
   defaultExpiryDate.setMinutes(defaultExpiryDate.getMinutes() + 1);
@@ -19,17 +20,24 @@ router.post("/", async (req, res, next) => {
     if (!validUrl.isUri(origUrl)) {
       return next(ApiError.badRequest("Invalid URL"));
     }
-    
+
+    if (origUrl.length > MAX_URL_LENGTH) {
+      return next(ApiError.badRequest("Original URL is too long"));
+    }
+
     const urlId = customShortUrl || shortid.generate();
     const shortUrl = `http://${process.env.HOST}:${process.env.PORT}/api/${urlId}`;
 
-    // Зберегти ідентифікатор користувача разом із іншими даними про URL
+    if (shortUrl.length > MAX_URL_LENGTH) {
+      return next(ApiError.badRequest("Generated short URL is too long"));
+    }
+
     const url = await Url.create({
       origUrl,
       shortUrl,
       urlId,
       expiryDate: expiryDate || defaultExpiryDate,
-      userId, // Зберегти ідентифікатор користувача (може бути null, якщо користувач неавторизований)
+      userId,
     });
 
     return res.json(url);
