@@ -8,18 +8,18 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <div class="registration-container"> <!-- Змінено клас контейнера -->
-        <h2 class="header">User Registration</h2> <!-- Додано клас заголовка -->
-        <form id="registrationForm" class="form"> <!-- Додано клас форми -->
-            <div class="form-group"> <!-- Додано клас групи форми -->
+    <div class="registration-container">
+        <h2 class="header">User Registration</h2> 
+        <form id="registrationForm" class="form"> 
+            <div class="form-group"> 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required class="registration-input"> <!-- Додано клас поля вводу -->
+                <input type="email" id="email" name="email" required class="registration-input"> 
             </div>
-            <div class="form-group"> <!-- Додано клас групи форми -->
+            <div class="form-group"> 
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required class="registration-input"> <!-- Додано клас поля вводу -->
+                <input type="password" id="password" name="password" required class="registration-input"> 
             </div>
-                <button type="submit" class="authButton btn"> <!-- Змінено клас кнопки -->
+                <button type="submit" class="authButton btn">
                     <div id="container-stars">
                         <div id="stars"></div>
                     </div>
@@ -28,7 +28,7 @@
                         <div class="circle"></div>
                     </div>
                     <strong>Register</strong>
-            </button> <!-- Змінено клас кнопки -->
+            </button> 
         </form>
         <div class="buttons-grid">
             <a href="/login.html" class="authButton btn">
@@ -71,9 +71,8 @@
 
                 const data = response.data;
 
-                // Зберігаємо токен в localStorage
                 localStorage.setItem('token', data.token);
-                localStorage.setItem('userId', data.userId); // Зберігаємо userId
+                localStorage.setItem('userId', data.userId); 
                 window.location.href = '/authorizedSite.html';
             } catch (error) {
                 console.error('Registration failed:', error.response ? error.response.data.message : error.message);

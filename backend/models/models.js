@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../db'); 
+const { DataTypes, Sequelize } = require('sequelize');
+const sequelize = require('../../db');
 
 const Url = sequelize.define('url', {
   origUrl: {
@@ -25,14 +25,30 @@ const Url = sequelize.define('url', {
 });
 
 const User = sequelize.define('user', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  email: { type: DataTypes.STRING, unique: true },
-  password: { type: DataTypes.STRING },
-  createdAt: { type: DataTypes.DATE },
-  updatedAt: { type: DataTypes.DATE }
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER 
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING
+  },
+  createdAt: {
+    allowNull: false,
+    type: DataTypes.DATE
+  },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE
+  }
 });
 
-User.hasMany(Url); 
-Url.belongsTo(User); 
+User.hasMany(Url);
+Url.belongsTo(User);
 
-module.exports = { Url, User};
+module.exports = { Url, User };

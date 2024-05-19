@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
     const data = await Url.findAll({ where: { userId } }); 
     res.json(data);
   } catch (error) {
-    console.error("Помилка при отриманні URL-адрес:", error);
+    console.error("Error getting URL:", error);
     next(error);
   }
 });

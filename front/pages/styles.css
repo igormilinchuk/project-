@@ -23,11 +23,10 @@ body {
   text-decoration: underline;
 }
 
-/* Стилі для форми авторизації */
 .login-container {
-  width: 100%; /* Змінено ширину контейнера на 100% */
-  max-width: 400px; /* Максимальна ширина контейнера */
-  height: auto; /* Автоматична висота контейнера */
+  width: 100%; 
+  max-width: 400px; 
+  height: auto;
   background: linear-gradient(#212121, #212121) padding-box,
               linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
   border: 2px solid transparent;
@@ -42,13 +41,13 @@ body {
   border-radius: 16px;
   background-size: 200% 100%;
   animation: gradient 5s ease infinite;
-  margin: 200px auto 0; /* Висота зверху, а ширина автоматична */
+  margin: 200px auto 0; 
 }
 
 /* Стилі для полів вводу */
 .login-input {
   width: 100%;
-  max-width: 320px; /* Максимальна ширина поля вводу */
+  max-width: 320px; 
   padding: 16px;
   border-radius: 8px;
   color: #fff;
@@ -61,7 +60,7 @@ body {
 
 .login-button {
   display: flex;
-  justify-content: center; /* Вирівнює кнопки по центру */
+  justify-content: center; 
   gap: 10px;
 }
 
@@ -78,11 +77,10 @@ body {
     z-index: 999;
 }
 
-/* Оновлені стилі для реєстрації */
 .registration-container {
   width: 100%;
-  max-width: 400px; /* Максимальна ширина контейнера */
-  height: auto; /* Автоматична висота контейнера */
+  max-width: 400px; 
+  height: auto; 
   background: linear-gradient(#212121, #212121) padding-box,
               linear-gradient(145deg, transparent 35%,#e81cff, #40c9ff) border-box;
   border: 2px solid transparent;
@@ -97,12 +95,12 @@ body {
   border-radius: 16px;
   background-size: 200% 100%;
   animation: gradient 5s ease infinite;
-  margin: 200px auto 0; /* Висота зверху, а ширина автоматична */
+  margin: 200px auto 0; 
 }
 
 .registration-input {
   width: 100%;
-  max-width: 320px; /* Максимальна ширина поля вводу */
+  max-width: 320px; 
   padding: 16px;
   border-radius: 8px;
   color: #fff;
@@ -114,7 +112,7 @@ body {
 
 .registration-button {
   display: flex;
-  justify-content: center; /* Вирівнює кнопки по центру */
+  justify-content: center; 
   gap: 10px;
 }
 
@@ -133,7 +131,7 @@ body {
 
 .registrationButtonsGrid {
   display: flex;
-  justify-content: center; /* Вирівнює кнопки по центру */
+  justify-content: center; 
   gap: 10px;
 }
 
@@ -141,7 +139,7 @@ body {
 
 .buttons-grid {
   display: flex;
-  justify-content: center; /* Вирівнює кнопки по центру */
+  justify-content: center; 
   gap: 10px;
 }
 
@@ -161,7 +159,7 @@ body {
   background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #ffdb3b 10%, #FE53BB 45%, #8F51EA 67%, #0044ff 87%);
   background-origin: border-box;
   background-clip: content-box, border-box;
-  margin: 10px auto; /* Додано автоматичні відступи по боках */
+  margin: 10px auto; 
 }
 
 .authButton.btn:hover {
@@ -291,11 +289,11 @@ body {
 
 .auth-box {
   width: 100%;
-  max-width: 400px; /* Менше розмір контейнера для авторизації */
+  max-width: 400px;
 }
 
 .auth-box .form-submit-btn {
-  width: auto; /* Автоматична ширина для кнопки логіну */
+  width: auto; 
 }
 
 @keyframes gradient {
