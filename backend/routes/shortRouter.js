@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const shortid = require("shortid");
 const validUrl = require('valid-url');
+
 const { Url } = require('../models/models');
 const ApiError = require('../error/apiError');
 
@@ -14,7 +15,8 @@ router.post("/", async (req, res, next) => {
   userId = userId || null;
 
   const defaultExpiryDate = new Date();
-  defaultExpiryDate.setMinutes(defaultExpiryDate.getMinutes() + 1);
+  defaultExpiryDate.setTime(defaultExpiryDate.getTime() + 24 * 60 * 60 * 1000);
+
 
   try {
     if (!validUrl.isUri(origUrl)) {
